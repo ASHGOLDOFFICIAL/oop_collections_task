@@ -37,4 +37,13 @@ public final class User {
     public int hashCode() {
         return Objects.hash(username, email, Arrays.hashCode(passwordHash));
     }
+
+    @Override
+    public String toString() {
+        return "User[" +
+                "username=" + username + ", " +
+                "email=" + email + ", " +
+                "passwordHash=" + passwordHash + ']';
+    }
+
 }

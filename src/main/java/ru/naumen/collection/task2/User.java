@@ -43,7 +43,7 @@ public final class User {
         return "User[" +
                 "username=" + username + ", " +
                 "email=" + email + ", " +
-                "passwordHash=" + passwordHash + ']';
+                "passwordHash=" + Arrays.toString(passwordHash) + ']';
     }
 
 }

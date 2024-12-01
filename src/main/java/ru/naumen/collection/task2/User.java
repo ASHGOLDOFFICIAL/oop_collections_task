@@ -9,7 +9,7 @@ import java.util.Objects;
  * @author vpyzhyanov
  * @since 19.10.2023
  */
-public final class User {
+public class User {
     private final String username;
     private final String email;
     private final byte[] passwordHash;

@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author vpyzhyanov
  * @since 19.10.2023
  */
-public final class Ticket {
+public class Ticket {
     private final long id;
     private final String client;
 

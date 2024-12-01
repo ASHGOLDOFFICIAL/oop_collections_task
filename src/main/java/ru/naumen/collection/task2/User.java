@@ -10,9 +10,9 @@ import java.util.Objects;
  * @since 19.10.2023
  */
 public class User {
-    private final String username;
-    private final String email;
-    private final byte[] passwordHash;
+    private String username;
+    private String email;
+    private byte[] passwordHash;
 
     public User(
             String username,

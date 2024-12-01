@@ -9,8 +9,8 @@ import java.util.Objects;
  * @since 19.10.2023
  */
 public class Ticket {
-    private final long id;
-    private final String client;
+    private long id;
+    private String client;
 
     public Ticket(long id, String client) {
         this.id = id;

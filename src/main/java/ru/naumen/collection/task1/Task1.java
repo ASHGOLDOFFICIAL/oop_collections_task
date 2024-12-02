@@ -1,5 +1,8 @@
 package ru.naumen.collection.task1;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Дано:
  * <pre>
@@ -22,8 +25,13 @@ package ru.naumen.collection.task1;
  * @author vpyzhyanov
  * @since 19.10.2023
  */
-public class Task1
-{
+public class Task1 {
+    /**
+     * Для быстрой реализации getGoods требуется быстрое взятие элемента по ключу.
+     * Выбор HashMap гарантирует это, так как операция get работает за O(1).
+     */
+    final Map<Long, Goods> goodsForTicket = new HashMap<>();
+
     public enum Goods {
         /**
          * нет товаров
@@ -43,7 +51,6 @@ public class Task1
      * Получить товары по билету
      */
     public Goods getGoods(Ticket ticket) {
-        // TODO реализовать
-        return null;
+        return goodsForTicket.get(ticket.getId());
     }
 }

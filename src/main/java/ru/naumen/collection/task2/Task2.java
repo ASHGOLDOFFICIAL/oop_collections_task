@@ -50,27 +50,23 @@ public class Task2
          если хэш-функция не будет иметь коллизий. Может содержать
          null, что важно, так как null может быть дупликатом.
         */
-        final Set<User> duplicates = new HashSet<>();
+        final Set<User> collASet = new HashSet<>(collA);
+        final Set<User> collBSet = new HashSet<>(collB);
 
         /*
-         Учитывая выбранные структуры имеем m итераций, где m -- число элементов
-         в collA. Проверка на наличие элемента в collB зависит от предоставленной
-         коллекции. Добавление в множество работает за O(1).
-         Использую forEach вместо range-based for, так как коллекция может
-         предоставлять какие-то оптимизации в этом методе.
+         Сложность метода -- O(m), где m -- размера collASet. В реализации у HashSet
+         происходит итерация по элементам коллекции collASet (O(m)). Во время итерации
+         вызывается операция удаления у множества (O(1)) и метод contains у collBSet
+         (O(1)).
         */
-        collA.forEach(user -> {
-            if (collB.contains(user)) {
-                duplicates.add(user);
-            }
-        });
+        collASet.retainAll(collBSet);
 
         /*
          Копируем все элементы в ArrayList и возвращаем. Альтернативным вариантом было
          использование List::copyOf, но он не принимает null в качестве элемента, а
          изначальные коллекции могли содержать их.
         */
-        return new ArrayList<>(duplicates);
+        return new ArrayList<>(collASet);
     }
 
     public static void main(String[] args) {

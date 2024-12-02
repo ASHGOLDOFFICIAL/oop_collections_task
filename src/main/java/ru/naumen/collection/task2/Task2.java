@@ -2,7 +2,9 @@ package ru.naumen.collection.task2;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -46,35 +48,38 @@ public class Task2
         }
 
         /*
-         Методы add и contains у HashSet работают за константу,
-         если хэш-функция не будет иметь коллизий. Может содержать
-         null, что важно, так как null может быть дупликатом.
+         Переносим все элементы второй коллекции в Set, чтобы операция
+         contains выполнялась за O(1). Перенос в элементов в текущей реализации
+         выполняется за O(n), где n -- размер коллекции, но эта сложность не
+         гарантирована в документации и может измениться в последующих версиях.
         */
-        final Set<User> collASet = new HashSet<>(collA);
         final Set<User> collBSet = new HashSet<>(collB);
 
         /*
-         Сложность метода -- O(m), где m -- размера collASet. В реализации у HashSet
-         происходит итерация по элементам коллекции collASet (O(m)). Во время итерации
-         вызывается операция удаления у множества (O(1)) и метод contains у collBSet
-         (O(1)).
+         LinkedList позволяет делать вставку в конец за O(1).
+         Других операций над списком не выполняется.
         */
-        collASet.retainAll(collBSet);
+        final List<User> duplicates = new LinkedList<>();
+
+        // Использую Set для избежания дубликатов внутри списка дубликатов.
+        final Set<User> presentInDuplicates = new HashSet<>();
 
         /*
-         Копируем все элементы в ArrayList и возвращаем. Альтернативным вариантом было
-         использование List::copyOf, но он не принимает null в качестве элемента, а
-         изначальные коллекции могли содержать их.
+         Делаем m итераций -> O(m). Не использую метод forEach, чтобы чуть более
+         точно гарантировать названую сложность.
         */
-        return new ArrayList<>(collASet);
-    }
+        for (final User user : collA) {
+            if (!presentInDuplicates.contains(user) && collBSet.contains(user)) {  // O(1) + O(1) -> O(1)
+                duplicates.add(user);           // O(1)
+                presentInDuplicates.add(user);  // O(1)
+            }
+        }
 
-    public static void main(String[] args) {
-        final List<User> collA = new ArrayList<>();
-        collA.add(null);
-        final Set<User> collB = new HashSet<>();
-        collB.add(null);
-
-        System.out.println(findDuplicates(collA, collB));
+        /*
+         Итоговая сложность: O(n) + O(m) -> O(n+m), либо O(max(n, m)), то есть линейная.
+         Если убрать использования presentInDuplicates,
+         то формальная сложность не изменится.
+        */
+        return duplicates;
     }
 }
